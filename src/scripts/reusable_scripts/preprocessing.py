@@ -486,8 +486,8 @@ def main(cfg: omegaconf.DictConfig) -> None:
 
     # Load data
 
-    data_path = paths.static / "data" / cfg["data"]["name"]
-    data = pd.read_csv(data_path, sep=" ")
+    data_dir = paths.static / "data"
+    data = pd.read_csv(data_dir / cfg["data"]["name"], sep=" ")
 
     # --------- Reformat DataFrame ---------
 
@@ -616,7 +616,7 @@ def main(cfg: omegaconf.DictConfig) -> None:
 
     # --------- Cross Match sSFR ---------
 
-    pantheon_sSFR = pd.read_csv(data_path / "Pantheon_HOSTGAL_sSFR.txt", sep=" ")
+    pantheon_sSFR = pd.read_csv(data_dir / "Pantheon_HOSTGAL_sSFR.txt", sep=" ")
     pantheon_sSFR["CID"] = pantheon_sSFR["CID"].str.lower().str.strip()
     pantheon_sSFR = pantheon_sSFR.drop("VARNAMES:", axis=1)
 
@@ -626,7 +626,7 @@ def main(cfg: omegaconf.DictConfig) -> None:
 
         print("\nCross matching w. additional catalogs for sSFRs...\n")
 
-        uddin = Table.read(data_path / "uddin_et_al_17.fit").to_pandas()
+        uddin = Table.read(data_dir / "uddin_et_al_17.fit").to_pandas()
         uddin = uddin.rename(
             columns={
                 "logsSFR2": "logsSFR",
@@ -637,7 +637,7 @@ def main(cfg: omegaconf.DictConfig) -> None:
         )
         uddin["logsSFR"][uddin["logsSFR"] == 0.0] = np.nan
 
-        jones = Table.read(data_path / "jones_et_al_18.fit").to_pandas()
+        jones = Table.read(data_dir / "jones_et_al_18.fit").to_pandas()
         jones = jones.rename(
             columns={
                 "SFR": "logsSFR",
