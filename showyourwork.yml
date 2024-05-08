@@ -25,16 +25,32 @@ dag:
 
 # Externally-hosted datasets, e.g. on Zenodo
 datasets:
+  10.5281/zenodo.11127132:
+    contents:
+      Pantheon+SH0ES.dat: src/data/Pantheon+SH0ES.dat
+      Pantheon_HOSTGAL_LOGMASS.txt: src/data/Pantheon_HOSTGAL_LOGMASS.txt
+      Pantheon_HOSTGAL_sSFR.txt: src/data/Pantheon_HOSTGAL_sSFR.txt
+      jones_et_al_18.fit: src/data/jones_et_al_18.fit
+      uddin_et_al_17.fit: src/data/uddin_et_al_17.fit
   # 10.5281/zenodo.6468327:
   #   contents:
   #     TOI640b.json: src/data/TOI640b.json
 
 # Custom file dependencies
 dependencies:
+  src/scripts/bash_scripts/pantheon_hubble_flow.sh:
+    - src/data/Pantheon+SH0ES.dat
+    - src/data/Pantheon_HOSTGAL_LOGMASS.txt
+    - src/data/Pantheon_HOSTGAL_sSFR.txt
+    - src/data/jones_et_al_18.fit
+    - src/data/uddin_et_al_17.fit
+    - src/scripts/reusable_scripts/preprocessing.py
+    - src/scripts/reusable_scripts/configs/preprocessing.yaml
   # src/scripts/my_script.py:
   #   - src/data/dataset_for_my_script.dat
-  # src/tex/ms.tex:
-  #   - src/tex/stylesheet.tex
+  src/tex/ms.tex:
+    - src/data/pantheon_hubble_flow
+    #- src/tex/stylesheet.tex
 
 # Name of the `.tex` manuscript and corresponding `.pdf` article
 ms_name: ms

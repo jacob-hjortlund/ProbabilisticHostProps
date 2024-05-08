@@ -1,0 +1,103 @@
+run_name: pantheon_hubble_flow
+
+data:
+  name: Pantheon+SH0ES.dat
+  sep: ' '
+
+columns_to_rename:
+  CID: CID
+  IDSURVEY: SurveyID
+  zHD: z
+  mB: mB
+  mBERR: mBErr
+  x1: x1
+  x1ERR: x1Err
+  c: c
+  cERR: cErr
+  x0: x0
+  COV_x1_c: cov_x1_c
+  COV_x1_x0: cov_x1_x0
+  COV_c_x0: cov_c_x0
+  HOST_LOGMASS: HOSTGAL_logMass
+  HOST_LOGMASS_ERR: HOSTGAL_logMass_err
+  biasCor_m_b_COVSCALE: bias_corr_factor
+  RA: RA
+  DEC: DEC
+include_calibrators: True
+cids_to_rename:
+  old: ['16314','16392','16333','14318','17186','17784','7876']
+  new: ['2006oa','2006ob','2006on','2006py','2007hx','2007jg','2005ir']
+
+flag_duplicates: True
+max_peak_date_diff: 10.
+max_angular_separation: 1. # arcsec
+max_redshift_separation: 0.001
+
+filters:
+  survey_ids:
+    kwargs:
+      survey_ids: []
+      survey_id_column: SurveyID
+    
+  redshift:
+    kwargs:
+      z_min: 0.0
+      z_max: 20. # Consider how to set to inf
+      z_column: z
+    
+  redshift_by_survey:
+    kwargs:
+      z_min: 0.0
+      survey_ids: []
+      survey_redshift_limits: []
+      survey_id_column: SurveyID
+    
+  apparent_b_mag_error:
+    kwargs:
+      b_mag_error_max: 0.2
+      alpha: 0.148
+      beta: 3.122
+      stretch_error_column: x1Err
+      color_error_column: cErr
+      redshift_column: z
+  
+  stretch:
+    kwargs:
+      stretch_min: -3.0
+      stretch_max: 3.0
+      stretch_column: x1
+    
+  stretch_error:
+    kwargs:
+      stretch_error_max: 1.5
+      stretch_error_column: x1Err
+
+  color:
+    kwargs:
+      color_min: -0.3
+      color_max: 0.3
+      color_column: c
+
+  fitprob:
+    kwargs:
+      fitprob_min: 0.001
+      fitprob_column: FITPROB
+    
+  peak_date_error:
+    kwargs:
+      peak_date_error_max: 2.
+      peak_date_error_column: PKMJDERR
+    
+  tripp_residual_error:
+    kwargs:
+      tripp_residual_error_max: 3.5
+      intrinsic_absolute_b_mag: -19.253
+      intrinsic_scatter: 0.12
+      alpha: 0.148
+      beta: 3.122
+      apparent_b_mag_column: mB
+      stretch_column: x1
+      stretch_error_column: x1Err
+      color_column: c
+      color_error_column: cErr
+      redshift_column: z
