@@ -486,7 +486,7 @@ def main(cfg: omegaconf.DictConfig) -> None:
 
     # Load data
 
-    data_path = paths.static / cfg["data"]["name"]
+    data_path = paths.static / "data" / cfg["data"]["name"]
     data = pd.read_csv(data_path, sep=" ")
 
     # --------- Reformat DataFrame ---------
@@ -616,7 +616,7 @@ def main(cfg: omegaconf.DictConfig) -> None:
 
     # --------- Cross Match sSFR ---------
 
-    pantheon_sSFR = pd.read_csv(paths.data / "Pantheon_HOSTGAL_sSFR.txt", sep=" ")
+    pantheon_sSFR = pd.read_csv(data_path / "Pantheon_HOSTGAL_sSFR.txt", sep=" ")
     pantheon_sSFR["CID"] = pantheon_sSFR["CID"].str.lower().str.strip()
     pantheon_sSFR = pantheon_sSFR.drop("VARNAMES:", axis=1)
 
