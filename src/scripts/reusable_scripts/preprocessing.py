@@ -505,7 +505,6 @@ def main(cfg: omegaconf.DictConfig) -> None:
     for column_name in columns_to_keep:
         if column_name not in data.columns:
             data[column_name] = NULL_VALUE
-    data["HOSTGAL_sSFR"] = np.nan
 
     # Flag Calibrator SNe
     if cfg.get("include_calibrators", True):
@@ -700,6 +699,7 @@ def main(cfg: omegaconf.DictConfig) -> None:
             print(f"Total fraction of SNe with sSFR: {total_fraction_with_sSFR:.2f}\n")
 
     filtered_data["HOSTGAL_sSFR"] = filtered_data["HOSTGAL_sSFR"].fillna(NULL_VALUE)
+    columns_to_keep += ["HOSTGAL_sSFR"]
     # --------- Save Data ---------
 
     filtered_data = filtered_data[columns_to_keep].copy()
