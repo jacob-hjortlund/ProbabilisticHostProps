@@ -487,7 +487,7 @@ def main(cfg: omegaconf.DictConfig) -> None:
     # Load data
 
     data_path = paths.data / cfg["data"]["name"]
-    data = pd.read_csv(data_path, sep=cfg["data"]["sep"])
+    data = pd.read_csv(data_path, sep=" ")
 
     # --------- Reformat DataFrame ---------
 
